@@ -1,0 +1,3 @@
+- Implement SOME/IP-SD packet dissecting
+- Parse a trace with multiple SOME/IP frames
+- JSON template must respect the SOME/IP paket protocol structure

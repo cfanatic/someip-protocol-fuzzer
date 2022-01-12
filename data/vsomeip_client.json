@@ -1,0 +1,143 @@
+[
+    {
+        "outgoing": true,
+        "layer": "SOMEIP",
+        "fields": {
+            "srv_id": {
+                "values": [
+                    4660
+                ],
+                "type": "XShortField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "sub_id": {
+                "values": [
+                    0
+                ],
+                "type": "BitEnumField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "method_id": {
+                "values": [
+                    1057
+                ],
+                "type": "ConditionalField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "event_id": {
+                "values": [
+                    null
+                ],
+                "type": "ConditionalField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "len": {
+                "values": [
+                    22
+                ],
+                "type": "IntField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "client_id": {
+                "values": [
+                    4883
+                ],
+                "type": "XShortField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "session_id": {
+                "values": [
+                    1
+                ],
+                "type": "XShortField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "proto_ver": {
+                "values": [
+                    1
+                ],
+                "type": "XByteField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "iface_ver": {
+                "values": [
+                    0
+                ],
+                "type": "XByteField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "msg_type": {
+                "values": [
+                    0
+                ],
+                "type": "ByteEnumField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "retcode": {
+                "values": [
+                    0
+                ],
+                "type": "ByteEnumField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "offset": {
+                "values": [
+                    null
+                ],
+                "type": "ConditionalField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "res": {
+                "values": [
+                    null
+                ],
+                "type": "ConditionalField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "more_seg": {
+                "values": [
+                    null
+                ],
+                "type": "ConditionalField",
+                "fuzzing": {
+                    "fuzzer": null
+                }
+            },
+            "load": {
+                "values": [
+                    "48656c6c6f205365727669636521"
+                ],
+                "type": "StrField",
+                "fuzzing": {
+                    "fuzzer": "radamsa"
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,2 @@
+# scapy==2.4.3
+git+git://github.com/secdev/scapy.git@master

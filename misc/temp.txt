@@ -1,0 +1,41 @@
+Blackbox-Testing:
+
+https://media.ccc.de/v/eh19-149-black-box-live-protocol-fuzzing
+
+Test Generation:
+- Idea #1: Send random bits to service application. This does not work, because we are required to establish a valid connection first.
+- Idea #2: Replace TCP/UDP-IP application layer stack with random data. This is a better approach, but we might not get past the initial if-statements which check the protocol version that is being used, for example.
+- Idea #3: Analyze protocol structure and fuzz particular protocol fields only.
+- Idea #4: Fuzz particular protocol fields and implement the communication logic. For example, for SOME/IP it is required to send an intial FIND SERVICE message in order to get the address and port for a particular service instance. That is a lot of work, because you need to analyze and implement the complete communication handshake.
+- Idea #5: Black-box live protocol fuzzing. Client sends messages cyclically, a fuzzer in the middle intercepts the pakets and manipulates their content and then forwards it to the service application. Advantages: 1. no need to worry about application logic, 2. the complete system interaction is under test. Disadvantages: 1. pakets need to be manipulated on-the-fly, 2. system components may not generate enough pakets.
+
+Scapy:
+- Basically Wireshark for Python
+- Can generate new packets
+- Can dissect existing packets
+- Can manipulate existing packets
+- Can recalculate the checksum
+
+Templates:
+- SOME/IP traffic needs to be recorded
+- Templates will be generated out of this traffic
+- The templates will contain a specific field for every protcol layer/field
+- The templates shall contain every protocol layer for data transmitted to the services, and data transmitted from the service
+- For every template field, you can specify which fuzzing technique should be applied
+- Modules are used to fuzz the fields, e.g. 1. Scapy offers a module for byte fields, 2. Radamsa can be used for string fields as a general purpose fuzzer (you can feed a pool of values into Radamsa, e.g. payload data that has been observed in the past)
+
+MitM:
+- Bettercap
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Scapy:
+s = sniff(iface="eth0", prn=lambda x: x.show(), count=10, filter="ip host 192.168.0.3 or ip host 192.168.0.4 and ip proto \\udp and not ip proto \\igmp")
+
+Radamsa:
+- In practice many programs fail in unique ways. Some common ways to catch obvious errors are to check the exit value, enable fatal signal printing in kernel and checking if something new turns up in dmesg, run a program under strace, gdb or valgrind and see if something interesting is caught, check if an error reporter process has been started after starting the program, etc.
+- The recommended use is $ radamsa -o output-%n.foo -n 100 samples/*.foo
+
+Wireshark:
+!arp and !icmpv6 and ip.addr == 192.168.0.3 and ip.dst == 192.168.0.4 and someip2 and !icmp
+!arp and !icmpv6 and someip2 and !icmp and ip.addr==192.168.0.3
