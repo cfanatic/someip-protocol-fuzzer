@@ -1,7 +1,7 @@
 import logging
 import threading
 
-logger = logging.getLogger("vsomeip-fuzzing")
+logger = logging.getLogger("someip_fuzzer")
 logger.setLevel(logging.DEBUG)
 
 # formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s", "%Y-%m-%d %H:%M:%S")

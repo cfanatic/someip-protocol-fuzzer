@@ -1,9 +1,9 @@
-from vsomeip_fuzzing.config import config
-from vsomeip_fuzzing.fuzzer import Fuzzer
-from vsomeip_fuzzing.heartbeat import Heartbeat
-from vsomeip_fuzzing.log import log_info, log_error
-from vsomeip_fuzzing.template import *
-from vsomeip_fuzzing.types import *
+from someip_fuzzer.config import config
+from someip_fuzzer.fuzzer import Fuzzer
+from someip_fuzzer.heartbeat import Heartbeat
+from someip_fuzzer.log import log_info, log_error
+from someip_fuzzer.template import *
+from someip_fuzzer.types import *
 from queue import Queue
 import signal
 import time

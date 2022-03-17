@@ -1,7 +1,7 @@
 from scapy.all import *
-from vsomeip_fuzzing.config import config
-from vsomeip_fuzzing.log import log_info
-from vsomeip_fuzzing.types import *
+from someip_fuzzer.config import config
+from someip_fuzzer.log import log_info
+from someip_fuzzer.types import *
 from queue import Queue
 import threading
 import time
