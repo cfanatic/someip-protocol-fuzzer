@@ -58,8 +58,8 @@ When you run `./response`, the output must show something similar to:
 Clone [someip-protocol-fuzzer](https://github.com/cfanatic/someip-protocol-fuzzer), and run following instructions:
 
 ```bash
-virtualenv -p python3 venv
-source venv/bin/activate
+virtualenv -p python3 .venv
+source .venv/bin/activate
 pip3 install -r requirements.txt 
 ```
 
