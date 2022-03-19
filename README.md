@@ -2,15 +2,15 @@
 
 This repository features a proof-of-concept for a SOME/IP network protocol fuzzer.
 
-What it does is quite simple: It mutates user-defined protocol fields using [radamsa](https://gitlab.com/akihe/radamsa).
+What it does is quite simple: It mutates user-defined protocol fields using radamsa.
 
 Implemented is a heartbeat mechanism which checks whether the target service on the other end is still responding. If not, fuzzing will be terminated.
-
-The current state is a black-box approach. In order to improve the attack potential in grey-box fashion, one would need to implement a state machine. You want to initialize the session in a way that the fuzzer is able to pass the most trivial checks on the target service first.
 
 ## Requirements
 
 It is recommended to use two VMs which run any version of GNU/Linux each.
+
+Furthermore, following software packages are required:
 
 | VM #1 - Target     | VM #2 - Fuzzer     |
 | ------------------ | ------------------ |
@@ -24,9 +24,9 @@ The instructions below describe how to configure the VMs for the target service 
 
 ### VM #1 - Target
 
-Clone [vsomeip-fuzzing](https://github.com/cfanatic/vsomeip-fuzzing), and follow the build instructions in sections [4. Build library](https://github.com/cfanatic/vsomeip-fuzzing#4-build-library) and [5. Build target](https://github.com/cfanatic/vsomeip-fuzzing#5-build-target). Call `make response` to build a SOME/IP service as the fuzzing target.
+Clone [vsomeip](https://github.com/COVESA/vsomeip) and [vsomeip-fuzzing](https://github.com/cfanatic/vsomeip-fuzzing). Consider the build instructions in sections [4. Build library](https://github.com/cfanatic/vsomeip-fuzzing#4-build-library) and [5. Build target](https://github.com/cfanatic/vsomeip-fuzzing#5-build-target). Call `make response` to build a SOME/IP service as the fuzzing target.
 
-Copy the [service configuration file](https://github.com/cfanatic/vsomeip-fuzzing/blob/master/conf/vsomeip_response.json) into the build folder next to `response`, and name it `vsomeip.json`. Adjust the IP address configuration field accordingly.
+Copy the [service configuration file](https://github.com/cfanatic/vsomeip-fuzzing/blob/master/conf/vsomeip_response.json) into the target build folder next to `response`, and name it `vsomeip.json`. Adjust the IP address configuration field accordingly.
 
 When you run `./response`, the output must show something similar to:
 
@@ -81,6 +81,37 @@ When you run `sudo python3 main.py`, the output must show something similar to:
 15:13:21 INFO: Exiting main()
 ```
 
-## Usage
+## Configuration
 
-n/a
+Define which SOME/IP protocol field the fuzzer shall mutate. Open the [protocol definition file](https://github.com/cfanatic/someip-protocol-fuzzer/blob/master/data/someip_fields.json), and set `"fuzzer": "radamsa"` for each field accordingly.
+
+The example below fuzzes the payload of a paket using *Hello Service!* as the initial seed:
+
+```json
+"load": {
+    "values": [
+        "48656c6c6f205365727669636521"
+    ],
+    "type": "StrField",
+    "fuzzing": {
+        "fuzzer": "radamsa"
+    }
+}
+```
+
+The [protocol definition export](https://github.com/cfanatic/someip-protocol-fuzzer/blob/master/someip_fuzzer/template.py) based on a given Wireshark trace was inspired by the presentation from Timo Ramsauer on [Black-Box Live Protocol Fuzzing](https://media.ccc.de/v/eh19-149-black-box-live-protocol-fuzzing).
+
+## Fuzzing
+
+Execute the service on VM #1 by running `./response`, and the fuzzer on VM #2 by running `sudo python3 main.py`:
+
+<a href="https://raw.githubusercontent.com/cfanatic/someip-protocol-fuzzer/master/misc/fuzzing.webm" target="_blank" rel="noopener noreferrer">![screenshot](https://raw.githubusercontent.com/cfanatic/someip-protocol-fuzzer/master/misc/fuzzing.png)</a>
+
+Following process takes place, including a periodic heartbeat mechanism implemented as ping/pong exchange:
+
+![flowchart](https://raw.githubusercontent.com/cfanatic/someip-protocol-fuzzer/master/misc/flowchart.png)
+
+## Improvements
+
+- The current state is a black-box approach. In order to improve the attack potential in grey-box fashion, one would need to implement a state machine to pass the most trivial checks on the target service first.
+- It makes sense to call the heartbeat check after each input transmission. This way you can capture which particular mutated input is responsible for anomalies on the target service.
