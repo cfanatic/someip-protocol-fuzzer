@@ -6,6 +6,8 @@ What it does is quite simple: It mutates user-defined protocol fields using rada
 
 Implemented is a heartbeat mechanism which checks whether the target service on the other end is still responding. If not, fuzzing will be terminated.
 
+[![demo](https://raw.githubusercontent.com/cfanatic/someip-protocol-fuzzer/master/misc/fuzzing.png)](https://codefanatic.de/git/fuzzing.webm)
+
 ## Requirements
 
 It is recommended to use two VMs which run any version of GNU/Linux each.
@@ -103,9 +105,7 @@ The [protocol definition export](https://github.com/cfanatic/someip-protocol-fuz
 
 ## Fuzzing
 
-Execute the service on VM #1 by running `./response`, and the fuzzer on VM #2 by running `sudo python3 main.py`:
-
-[![demo](https://raw.githubusercontent.com/cfanatic/someip-protocol-fuzzer/master/misc/fuzzing.png)](https://codefanatic.de/git/fuzzing.webm)
+Execute the service on VM #1 by running `./response`, and the fuzzer on VM #2 by running `sudo python3 main.py`.
 
 Following process takes place, including a periodic heartbeat mechanism implemented as ping/pong exchange:
 
