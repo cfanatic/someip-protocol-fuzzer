@@ -105,7 +105,7 @@ The [protocol definition export](https://github.com/cfanatic/someip-protocol-fuz
 
 Execute the service on VM #1 by running `./response`, and the fuzzer on VM #2 by running `sudo python3 main.py`:
 
-<a href="https://raw.githubusercontent.com/cfanatic/someip-protocol-fuzzer/master/misc/fuzzing.webm" target="_blank" rel="noopener noreferrer">![screenshot](https://raw.githubusercontent.com/cfanatic/someip-protocol-fuzzer/master/misc/fuzzing.png)</a>
+[![demo](https://raw.githubusercontent.com/cfanatic/someip-protocol-fuzzer/master/misc/fuzzing.png)](https://codefanatic.de/git/fuzzing.webm)
 
 Following process takes place, including a periodic heartbeat mechanism implemented as ping/pong exchange:
 
