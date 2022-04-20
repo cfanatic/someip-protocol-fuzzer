@@ -26,15 +26,15 @@ The instructions below describe how to configure the VMs for the target service 
 
 ### VM #1 - Target
 
-Clone [vsomeip](https://github.com/COVESA/vsomeip) and [vsomeip-fuzzing](https://github.com/cfanatic/vsomeip-fuzzing). Consider the build instructions in sections [4. Build library](https://github.com/cfanatic/vsomeip-fuzzing#4-build-library) and [5. Build target](https://github.com/cfanatic/vsomeip-fuzzing#5-build-target). Call `make response` to build a SOME/IP service as the fuzzing target.
+Clone [vsomeip](https://github.com/COVESA/vsomeip) and [vsomeip-fuzzing](https://github.com/cfanatic/vsomeip-fuzzing/tree/feature-demo-someip). Check out the branch `feature-demo-someip`, and follow the [setup instructions](https://github.com/cfanatic/vsomeip-fuzzing/tree/feature-demo-someip#setup). Call `make response` to build a SOME/IP service as the fuzzing target.
 
-Copy the [service configuration file](https://github.com/cfanatic/vsomeip-fuzzing/blob/master/conf/vsomeip_response.json) into the target build folder next to `response`, and name it `vsomeip.json`. Adjust the IP address configuration field accordingly.
+Adjust the IP address in the [service configuration file](https://github.com/cfanatic/vsomeip-fuzzing/blob/feature-demo-someip/conf/vsomeip_response.json) accordingly.
 
-When you run `./response`, the output must show something similar to:
+When you run `VSOMEIP_CONFIGURATION=../conf/vsomeip_response.json ./response`, the output must show something similar to:
 
 ```log
 2022-02-18 14:59:28.396999 [info] Parsed vsomeip configuration in 0ms
-2022-02-18 14:59:28.397593 [info] Using configuration file: "./vsomeip.json".
+2022-02-18 14:59:28.397593 [info] Using configuration file: "../conf/vsomeip_response.json".
 2022-02-18 14:59:28.397751 [info] Initializing vsomeip application "!!SERVICE!!".
 2022-02-18 14:59:28.398101 [info] Instantiating routing manager [Host].
 2022-02-18 14:59:28.398342 [info] create_local_server Routing endpoint at /tmp/vsomeip-0
@@ -65,7 +65,7 @@ source .venv/bin/activate
 pip3 install -r requirements.txt 
 ```
 
-Open the [fuzzer configuration file](https://github.com/cfanatic/someip-protocol-fuzzer/blob/master/config.ini), and adjust the IP address configuration fields accordingly. Same for the source and destination ports. You can find this out using Wireshark.
+Open the [fuzzer configuration file](https://github.com/cfanatic/someip-protocol-fuzzer/blob/master/config.ini), and adjust the IP address configuration fields accordingly. Same for the source and destination ports. You can find this out by analyzing SOME/IP traffic using Wireshark.
 
 Finally, install [radamsa](https://gitlab.com/akihe/radamsa).
 
@@ -105,7 +105,7 @@ The [protocol definition export](https://github.com/cfanatic/someip-protocol-fuz
 
 ## Fuzzing
 
-Execute the service on VM #1 by running `./response`, and the fuzzer on VM #2 by running `sudo python3 main.py`.
+Execute the service on VM #1 and the fuzzer on VM #2 as described above.
 
 Following process takes place, including a periodic heartbeat mechanism implemented as ping/pong exchange:
 
